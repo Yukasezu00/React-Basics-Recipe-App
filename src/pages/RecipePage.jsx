@@ -20,17 +20,19 @@ export const RecipePage = ({ recipe, onBack }) => {
           ← Back
         </Button>
 
-        <Grid templateColumns={["1fr", "1fr 1fr"]} gap={6}>
-          {/* Afbeelding */}
-          <Image
-            src={recipe.image}
-            alt={recipe.label}
-            boxSize="100%"
-            objectFit="cover"
-            borderRadius="10px"
-          />
+        <Grid templateColumns={["1fr", "1fr", "1fr 1fr"]} gap={6}>
+          <Box gridColumn={["1 / span 1", "1 / span 1", "1 / span 2"]}>
+            <Image
+              src={recipe.image}
+              alt={recipe.label}
+              width="30%"
+              maxHeight="250px"
+              objectFit="cover"
+              borderRadius="10px"
+            />
+          </Box>
 
-          {/* Recept Informatie */}
+          {/* Recipe Information */}
           <VStack align="start" color="black" spacing={2}>
             <Heading size="lg">{recipe.label}</Heading>
             <Text fontSize="sm">
@@ -41,7 +43,10 @@ export const RecipePage = ({ recipe, onBack }) => {
               <strong>Dish Type:</strong> {recipe.dishType?.join(", ")}
             </Text>
             <Text fontSize="sm">
-              <strong>Total Cooking Time:</strong> {recipe.totalTime} minutes
+              <strong>Total Cooking Time:</strong>{" "}
+              {recipe.totalTime === 0
+                ? "Unknown"
+                : `${recipe.totalTime} minutes`}
             </Text>
             <Text fontSize="sm">
               <strong>Servings:</strong> {recipe.yield}
@@ -83,22 +88,29 @@ export const RecipePage = ({ recipe, onBack }) => {
           </VStack>
         </Grid>
 
-        {/* Lijn voor scheiding */}
+        {/* Divider */}
         <Divider my={6} />
 
-        {/* Ingrediënten */}
+        {/* Ingredients */}
         <Box color="black">
           <Heading size="md" mb={2}>
             Ingredients:
           </Heading>
           <UnorderedList>
             {recipe.ingredients.map((ingredient, index) => (
-              <ListItem key={index}>{ingredient.text}</ListItem>
+              <ListItem key={index}>
+                {ingredient.text}{" "}
+                {ingredient.foodCategory && (
+                  <Text fontSize="xs" color="gray.500">
+                    ({ingredient.foodCategory})
+                  </Text>
+                )}
+              </ListItem>
             ))}
           </UnorderedList>
         </Box>
 
-        {/* Lijn voor scheiding */}
+        {/* Divider */}
         <Divider my={6} />
 
         {/* Total Nutrients */}
@@ -107,27 +119,33 @@ export const RecipePage = ({ recipe, onBack }) => {
             Total Nutrients:
           </Heading>
           <Text>
-            <strong>Energy:</strong> {recipe.totalNutrients.ENERC_KCAL.quantity}{" "}
+            <strong>Energy:</strong>{" "}
+            {recipe.totalNutrients.ENERC_KCAL.quantity.toFixed(2)}{" "}
             {recipe.totalNutrients.ENERC_KCAL.unit}
           </Text>
           <Text>
-            <strong>Carbs:</strong> {recipe.totalNutrients.CHOCDF.quantity}{" "}
+            <strong>Carbs:</strong>{" "}
+            {recipe.totalNutrients.CHOCDF.quantity.toFixed(2)}{" "}
             {recipe.totalNutrients.CHOCDF.unit}
           </Text>
           <Text>
-            <strong>Protein:</strong> {recipe.totalNutrients.PROCNT.quantity}{" "}
+            <strong>Protein:</strong>{" "}
+            {recipe.totalNutrients.PROCNT.quantity.toFixed(2)}{" "}
             {recipe.totalNutrients.PROCNT.unit}
           </Text>
           <Text>
-            <strong>Fat:</strong> {recipe.totalNutrients.FAT.quantity}{" "}
+            <strong>Fat:</strong>{" "}
+            {recipe.totalNutrients.FAT.quantity.toFixed(2)}{" "}
             {recipe.totalNutrients.FAT.unit}
           </Text>
           <Text>
-            <strong>Cholesterol:</strong> {recipe.totalNutrients.CHOLE.quantity}{" "}
+            <strong>Cholesterol:</strong>{" "}
+            {recipe.totalNutrients.CHOLE.quantity.toFixed(2)}{" "}
             {recipe.totalNutrients.CHOLE.unit}
           </Text>
           <Text>
-            <strong>Sodium:</strong> {recipe.totalNutrients.NA.quantity}{" "}
+            <strong>Sodium:</strong>{" "}
+            {recipe.totalNutrients.NA.quantity.toFixed(2)}{" "}
             {recipe.totalNutrients.NA.unit}
           </Text>
         </Box>
