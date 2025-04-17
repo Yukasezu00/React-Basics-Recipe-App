@@ -9,6 +9,7 @@ import {
   Grid,
   Badge,
   Stack,
+  Center,
 } from "@chakra-ui/react";
 import { data } from "../utils/data";
 
@@ -84,100 +85,111 @@ export const RecipeListPage = ({ onSelectRecipe }) => {
         </Stack>
       </Box>
 
-      {/* ✅ Grid met 5 kolommen op brede schermen */}
-      <Grid
-        templateColumns={[
-          "1fr", // mobiel
-          "repeat(2, 1fr)", // tablet
-          "repeat(3, 1fr)", // kleiner desktop
-          "repeat(5, 1fr)", // brede desktop
-        ]}
-        gap={4}
-      >
-        {filteredRecipes.map((hit, index) => {
-          const recipe = hit.recipe;
-          return (
-            <Box
-              key={index}
-              onClick={() => onSelectRecipe(recipe)}
-              p={3}
-              bg="white"
-              color="black"
-              borderRadius="10px"
-              boxShadow="md"
-              transition="all 0.2s"
-              _hover={{
-                cursor: "pointer",
-                bg: "gray.100",
-                transform: "scale(1.02)",
-              }}
-            >
-              <Image
-                src={recipe.image}
-                alt={recipe.label}
-                height="100px"
-                width="100%"
-                objectFit="cover"
-                borderRadius="8px"
-              />
-              <Heading size="sm" mt={2} noOfLines={2}>
-                {recipe.label}
-              </Heading>
-              <Text fontSize="xs" fontWeight="bold">
-                {recipe.mealType?.join(", ").toUpperCase()}
-              </Text>
+      {/* ✅ Geen recepten gevonden melding */}
+      {filteredRecipes.length === 0 ? (
+        <Center fontSize="lg" fontWeight="bold" mt={10}>
+          No recipes found.
+        </Center>
+      ) : (
+        <Grid
+          templateColumns={[
+            "1fr", // mobiel
+            "repeat(2, 1fr)", // tablet
+            "repeat(3, 1fr)", // kleinere desktop
+            "repeat(5, 1fr)", // brede desktop
+          ]}
+          gap={4}
+        >
+          {filteredRecipes.map((hit, index) => {
+            const recipe = hit.recipe;
+            return (
+              <Box
+                key={index}
+                onClick={() => onSelectRecipe(recipe)}
+                p={3}
+                bg="white"
+                color="black"
+                borderRadius="10px"
+                boxShadow="md"
+                transition="all 0.2s"
+                _hover={{
+                  cursor: "pointer",
+                  bg: "gray.100",
+                  transform: "scale(1.02)",
+                }}
+              >
+                <Image
+                  src={recipe.image}
+                  alt={recipe.label}
+                  height="100px"
+                  width="100%"
+                  objectFit="cover"
+                  borderRadius="8px"
+                />
+                <Heading size="sm" mt={2} noOfLines={2}>
+                  {recipe.label}
+                </Heading>
+                <Text fontSize="xs" fontWeight="bold">
+                  {recipe.mealType?.join(", ").toUpperCase()}
+                </Text>
 
-              <Text fontSize="xs">
-                <strong>Dish:</strong> {recipe.dishType?.join(", ")}
-              </Text>
+                <Text fontSize="xs">
+                  <strong>Dish:</strong> {recipe.dishType?.join(", ")}
+                </Text>
 
-              {recipe.dietLabels?.length > 0 && (
-                <Box mt={1}>
-                  {recipe.dietLabels.map((diet, i) => (
-                    <Badge key={i} colorScheme="green" mr={1} fontSize="0.6em">
-                      {diet.toUpperCase()}
-                    </Badge>
-                  ))}
-                </Box>
-              )}
-
-              {recipe.healthLabels && (
-                <Box mt={1}>
-                  {recipe.healthLabels
-                    .filter((label) =>
-                      ["vegan", "vegetarian"].includes(
-                        label.toLowerCase().replace("-", "")
-                      )
-                    )
-                    .map((label, i) => (
+                {recipe.dietLabels?.length > 0 && (
+                  <Box mt={1}>
+                    {recipe.dietLabels.map((diet, i) => (
                       <Badge
                         key={i}
-                        colorScheme="purple"
+                        colorScheme="green"
                         mr={1}
                         fontSize="0.6em"
                       >
-                        {label.toUpperCase()}
+                        {diet.toUpperCase()}
                       </Badge>
                     ))}
-                </Box>
-              )}
+                  </Box>
+                )}
 
-              {recipe.cautions?.length > 0 && (
-                <Box mt={1}>
-                  <Text fontSize="xs" fontWeight="bold">
-                    Cautions:
-                  </Text>
-                  {recipe.cautions.map((caution, i) => (
-                    <Badge key={i} colorScheme="red" mr={1} fontSize="0.6em">
-                      {caution.toUpperCase()}
-                    </Badge>
-                  ))}
-                </Box>
-              )}
-            </Box>
-          );
-        })}
-      </Grid>
+                {recipe.healthLabels && (
+                  <Box mt={1}>
+                    {recipe.healthLabels
+                      .filter((label) =>
+                        ["vegan", "vegetarian"].includes(
+                          label.toLowerCase().replace("-", "")
+                        )
+                      )
+                      .map((label, i) => (
+                        <Badge
+                          key={i}
+                          colorScheme="purple"
+                          mr={1}
+                          fontSize="0.6em"
+                        >
+                          {label.toUpperCase()}
+                        </Badge>
+                      ))}
+                  </Box>
+                )}
+
+                {recipe.cautions?.length > 0 && (
+                  <Box mt={1}>
+                    <Text fontSize="xs" fontWeight="bold">
+                      Cautions:
+                    </Text>
+                    {recipe.cautions.map((caution, i) => (
+                      <Badge key={i} colorScheme="red" mr={1} fontSize="0.6em">
+                        {caution.toUpperCase()}
+                      </Badge>
+                    ))}
+                  </Box>
+                )}
+              </Box>
+            );
+          })}
+        </Grid>
+      )}
     </Box>
   );
 };
