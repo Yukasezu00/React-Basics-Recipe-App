@@ -39,18 +39,6 @@ The app displays a restaurant’s recipe overview, allowing users to search, fil
 
 - Styling handled by Chakra UI components and theming
 
-## Improvements Based on Feedback 💡
-The app received a positive review with a passing grade from Winc Academy. Based on feedback, the following improvements have been implemented:
-
-- Adjusted recipe images on narrow viewports to improve layout and prevent excessive height
-
-- Recipes with zero total cooking time now display "Unknown" instead of "0 minutes"
-
-- Nutritional values rounded to 1 or 2 decimal places for better readability
-
-- Added user feedback message "No recipes found" when search or filters yield no results
-
-- Enhanced visibility of health label checkboxes by increasing contrast for accessibility
 
 ## What I Learned 📚
 During this project, I improved my skills in:
