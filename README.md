@@ -76,7 +76,9 @@ During this project, I improved my skills in:
 
 - Connect to a real backend API for dynamic data fetching
 
-Author ✍️
+## Author ✍️
+
 Yunus Yildiz
+
 
 Thank you for reviewing my project! 🙏
